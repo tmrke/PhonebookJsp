@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ContactDao {
     private List<Contact> contactList = new ArrayList<>();
+    private List<Contact> contactsByFilter = new ArrayList<>();
     private AtomicInteger idSequence = new AtomicInteger(0);
     private Contact lastContact = new Contact();
     private ContactValidation lastContactValidation = new ContactValidation();
@@ -40,12 +41,22 @@ public class ContactDao {
         contactList.add(contact);
     }
 
-    public void delete(Contact contact) {
-        contactList.remove(contact.getId());
+    public void delete(int contactId) {
+        contactList.removeIf(contact -> contact.getId() == contactId);
     }
 
-    public void filter(){
+    public List<Contact> filter(String filterString) {
+        contactsByFilter.clear();
 
+        for (Contact contact : contactList) {
+            if (contact.getFirstName().toLowerCase().contains(filterString)
+                    || contact.getLastName().toLowerCase().contains(filterString)
+                    || contact.getPhone().toLowerCase().contains(filterString)) {
+                contactsByFilter.add(contact);
+            }
+        }
+
+        return contactsByFilter;
     }
 
     public void saveLastContact(Contact contact) {

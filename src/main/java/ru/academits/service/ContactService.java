@@ -63,23 +63,12 @@ public class ContactService {
         return contactValidation;
     }
 
-    public void deleteContact(Contact contact) {
-            contactDao.delete(contact);
+    public void deleteContact(int contactId) {
+            contactDao.delete(contactId);
     }
 
     public List<Contact> getContactsByFilter(String filterString) {
-        List<Contact> contactsByFilter = new ArrayList<>();
-        List<Contact> allContacts = getAllContacts();
-
-        for (Contact contact : allContacts) {
-            if (contact.getFirstName().toLowerCase().contains(filterString)
-                    || contact.getLastName().toLowerCase().contains(filterString)
-                    || contact.getPhone().toLowerCase().contains(filterString)) {
-                contactsByFilter.add(contact);
-            }
-        }
-
-        return contactsByFilter;
+        return contactDao.filter(filterString);
     }
 
     public List<Contact> getAllContacts() {

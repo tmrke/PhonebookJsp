@@ -35,12 +35,12 @@
         </form>
     </div>
 
-    <table class="table table-bordered contact-table">
+    <table class="table table-bordered contact-table" id="contacts_table">
         <thead>
         <tr>
             <th>
                 <label class="select-all-label">
-                    <input type="checkbox" title="Выбрать"/>
+                    <input type="checkbox" id="main_checkbox" title="Выбрать"/>
                 </label>
             </th>
             <th>№</th>
@@ -50,40 +50,27 @@
             <th>Удалить</th>
         </tr>
         </thead>
+
         <tbody>
-        <% int number = 0;
-            for (Contact contact : contactList) {
-                number++;
-        %>
-        <form action="delete" method="POST">
-        <tr <% Contact contact1 = contact; %>>
+        <c:forEach var="contact" items="${contactList}">
+            <tr>
                 <td>
                     <label class="select-me-label">
-                        <input type="checkbox" class="select-me"/>
+                        <input type="checkbox" class="select-me" name="contactId" value="${contact.getId()}"/>
                     </label>
                 </td>
+                <td><c:out value="${contact.getId()}"/></td>
+                <td><c:out value="${contact.getLastName()}"/></td>
+                <td><c:out value="${contact.getFirstName()}"/></td>
+                <td><c:out value="${contact.getPhone()}"/></td>
                 <td>
-                    <% out.println(number); %>
+                    <form action="delete" method="post">
+                        <input type="hidden" name="id" value="${contact.getId()}"/>
+                        <button type="submit" class='btn btn-primary'>Удалить</button>
+                    </form>
                 </td>
-                <td>
-                    <% out.println(contact.getLastName()); %>
-                </td>
-                <td>
-                    <% out.println(contact.getFirstName()); %>
-                </td>
-                <td>
-                    <% out.println(contact.getPhone()); %>
-                </td>
-
-                <td>
-                    <input type="hidden" name="contact" value="${contact}"/>
-                    <button type="submit" class='btn btn-primary'>Удалить</button>
-                </td>
-        </tr>
-        </form>
-
-
-        <%}%>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 
