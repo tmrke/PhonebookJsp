@@ -21,7 +21,6 @@
 <div class="alert" title="Нет выбранных контактов"></div>
 <div class="content">
 
-
     <div>
         <form class="filter-container" method="POST" action="filter">
             <label class="filter-label mb-0 mr-2">
@@ -52,14 +51,14 @@
         </thead>
 
         <tbody>
-        <c:forEach var="contact" items="${contactList}">
+        <c:forEach var="contact" items="${contactList}" varStatus="loop">
             <tr>
                 <td>
                     <label class="select-me-label">
                         <input type="checkbox" class="select-me" name="contactId" value="${contact.getId()}"/>
                     </label>
                 </td>
-                <td><c:out value="${contact.getId()}"/></td>
+                <td>${loop.index + 1}</td>
                 <td><c:out value="${contact.getLastName()}"/></td>
                 <td><c:out value="${contact.getFirstName()}"/></td>
                 <td><c:out value="${contact.getPhone()}"/></td>

@@ -2,17 +2,13 @@ package ru.academits.coverter;
 
 import ru.academits.model.Contact;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ContactConverter {
-
-    public Contact convertFormStringParam(String contactParams) throws UnsupportedEncodingException {
+    public Contact convertFormStringParam(String contactParams) {
         Map<String, String> map = splitQuery(contactParams);
         Contact contact = new Contact();
         contact.setLastName(map.get("lastName"));
@@ -22,7 +18,7 @@ public class ContactConverter {
         return contact;
     }
 
-    private static Map<String, String> splitQuery(String params) throws UnsupportedEncodingException {
+    private static Map<String, String> splitQuery(String params) {
         Map<String, String> queryPairs = new HashMap<>();
         String[] pairs = params.split("&");
 
